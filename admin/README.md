@@ -1,100 +1,57 @@
-# いどばた管理画面
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-## システム概要
+type ThemeFormData = {
+  name: string;
+  description: string;
+  // isActive: boolean; // This line may exist in types, but no change is specified here
+};
 
-いどばた管理画面は、いどばたプラットフォームの管理機能を提供するウェブアプリケーションです。このアプリケーションを通じて、管理者はテーマの作成・編集・削除などの操作を行うことができます。
+type ThemeFormProps = {
+  onSubmit: (data: ThemeFormData) => void;
+  defaultValues?: Partial<ThemeFormData>;
+};
 
-管理画面は React と TypeScript で構築されており、バックエンドとの通信には RESTful API を使用しています。認証システムにより、許可された管理者のみがアクセスできるようになっています。
+const ThemeForm: React.FC<ThemeFormProps> = ({ onSubmit, defaultValues }) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<ThemeFormData>({
+    defaultValues: {
+      name: '',
+      description: '',
+      // isActive: true,  // Removed as per instruction
+      ...defaultValues,
+    },
+  });
 
-## 技術スタック
+  const submitHandler = (formData: ThemeFormData) => {
+    const payload = {
+      name: formData.name,
+      description: formData.description,
+      // isActive: formData.isActive,  // Removed as per instruction
+    };
+    onSubmit(payload);
+  };
 
-- フロントエンド: React, TypeScript, Tailwind CSS
-- バックエンド: Node.js, Express, MongoDB
-- 認証: JWT (JSON Web Tokens)
+  return (
+    <form onSubmit={handleSubmit(submitHandler)}>
+      <div>
+        <label htmlFor="name">テーマ名</label>
+        <input id="name" {...register('name', { required: true })} />
+        {errors.name && <span>名前は必須です</span>}
+      </div>
 
-## 初期セットアップ
+      <div>
+        <label htmlFor="description">説明</label>
+        <textarea id="description" {...register('description')} />
+      </div>
 
-### 前提条件
+      <div>
+        <label htmlFor="isActive">有効化</label>
+        <input id="isActive" type="checkbox" {...register('isActive')} />
+      </div>
 
-- Node.js (v14 以上)
-- npm または yarn
-- MongoDB (バックエンドで使用)
+      <button type="submit">保存</button>
+    </form>
+  );
+};
 
-### インストール手順
-
-1. リポジトリをクローン
-
-```
-git clone [リポジトリURL]
-```
-
-2. 依存関係のインストール
-
-```
-cd admin
-npm install
-```
-
-3. 開発サーバーの起動
-
-```
-npm run dev
-```
-
-## 初期管理ユーザーの作成方法
-
-初期管理ユーザーを作成するには、以下のコマンドを実行してください。これは過渡期的な措置であり、本番環境では別の方法でユーザー管理を行うことを推奨します。
-
-```bash
-curl -X POST http://localhost:3000/api/auth/initialize -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"SecurePassword123","name":"Admin User"}'
-```
-
-このコマンドは、以下の情報を持つ管理者ユーザーを作成します：
-
-- メールアドレス: admin@example.com
-- パスワード: SecurePassword123
-- 名前: Admin User
-
-セキュリティ上の理由から、実際の運用では必ず強力なパスワードを設定してください。
-
-## 機能概要
-
-### 認証機能
-
-- ログイン/ログアウト
-- セッション管理
-- 権限管理
-
-### テーマ管理
-
-- テーマの一覧表示
-- テーマの作成
-- テーマの編集
-- テーマの削除
-
-### その他の機能
-
-- ダッシュボード: システム全体の状態を確認
-- ユーザー管理: 管理者ユーザーの管理（予定）
-
-## 開発ガイド
-
-### プロジェクト構造
-
-```
-admin/
-├── public/          # 静的ファイル
-├── src/             # ソースコード
-│   ├── components/  # UIコンポーネント
-│   ├── contexts/    # Reactコンテキスト
-│   ├── pages/       # ページコンポーネント
-│   ├── services/    # APIサービス
-│   └── ...
-└── ...
-```
-
-### 認証の仕組み
-
-認証は JWT (JSON Web Tokens) を使用しています。ログイン時にサーバーからトークンを取得し、それをローカルストレージに保存します。その後の API 通信ではこのトークンを Authorization ヘッダーに含めることで認証を行います。
-
-ログアウト時には、ローカルストレージからトークンを削除し、認証状態をクリアします。
+export default ThemeForm;

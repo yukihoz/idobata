@@ -163,16 +163,17 @@ const Top = () => {
 
   if (isMockMode || topPageData) {
     const templateProps = isMockMode
-      ? {
-          discussions: mockDiscussionData,
-          themes: mockThemeData,
-          questions: mockQuestions,
-          latestOpinions: [], // Mock mode doesn't have opinions yet
-        }
-      : {
-          latestQuestions: topPageData?.latestQuestions || [],
-          latestOpinions: topPageData?.latestOpinions || [],
-        };
+  ? {
+      discussions: mockDiscussionData,
+      themes: mockThemeData,
+      questions: mockQuestions,
+      latestOpinions: [], // Mock mode doesn't have opinions yet
+    }
+  : {
+      themes: topPageData?.latestThemes || [],
+      latestQuestions: topPageData?.latestQuestions || [],
+      latestOpinions: topPageData?.latestOpinions || [],
+    };
 
     return <TopPageTemplate {...templateProps} />;
   }

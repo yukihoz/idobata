@@ -26,7 +26,6 @@ const ThemeForm: FC<ThemeFormProps> = ({ theme, isEdit = false }) => {
     title: "",
     description: "",
     slug: "",
-    isActive: true,
     customPrompt: "",
     disableNewComment: false,
   });

@@ -5,6 +5,11 @@ import { Button } from "../ui/button";
 import { Select } from "../ui/select";
 
 interface HeroSectionProps {
+  themes?: {
+    _id: string;
+    title: string;
+    slug: string;
+  }[];
   latestQuestions?: {
     _id: string;
     questionText: string;

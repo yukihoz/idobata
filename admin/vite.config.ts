@@ -14,5 +14,11 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts:
       process.env.VITE_ADMIN_FRONTEND_ALLOWED_HOSTS?.split(",") || [],
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
   },
 });

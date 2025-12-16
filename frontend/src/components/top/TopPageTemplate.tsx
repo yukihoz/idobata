@@ -6,6 +6,11 @@ import OpinionsSection from "../home/OpinionsSection";
 import QuestionsTable from "../home/QuestionsTable";
 
 export interface TopPageTemplateProps {
+  themes?: {
+    _id: string;
+    title: string;
+    slug: string;
+  }[];
   latestQuestions?: {
     _id: string;
     questionText: string;
@@ -22,6 +27,7 @@ export interface TopPageTemplateProps {
 }
 
 const TopPageTemplate = ({
+  themes = [],
   latestQuestions = [],
   latestOpinions = [],
 }: TopPageTemplateProps) => {
@@ -54,7 +60,10 @@ const TopPageTemplate = ({
         <BreadcrumbView items={[]} />
       </div>
 
-      <HeroSection latestQuestions={latestQuestions} />
+      <HeroSection
+        latestQuestions={latestQuestions}
+        themes={themes}
+/>
 
       <OpinionsSection opinions={latestOpinions} />
 
