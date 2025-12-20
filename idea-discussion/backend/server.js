@@ -110,13 +110,13 @@ if (process.env.NODE_ENV === "production") {
   const frontendBuildPath = path.join(__dirname, "../frontend/dist");
   app.use(express.static(frontendBuildPath));
 
-  // ⚠️ path-to-regexp v6 対応
   app.get("*", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    return res.status(404).end();
-  }
-  res.sendFile(path.join(frontendBuildPath, "index.html"));
-});
+    if (req.path.startsWith("/api")) {
+      return res.status(404).end();
+    }
+    res.sendFile(path.join(frontendBuildPath, "index.html"));
+  });
+}
 
 // For development, add a fallback route to handle non-API requests
 app.use((req, res, next) => {
