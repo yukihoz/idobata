@@ -106,15 +106,12 @@ app.use("/api/likes", likeRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // --- Serve static files in production ---
-// This section will be useful when deploying to production
-// For development, we'll handle this with a fallback route
 if (process.env.NODE_ENV === "production") {
-  // Serve static files from the React app build directory
   const frontendBuildPath = path.join(__dirname, "../frontend/dist");
   app.use(express.static(frontendBuildPath));
 
-  // For any request that doesn't match an API route, serve the React app
-  app.get("/*", (req, res) => {
+  // ⚠️ path-to-regexp v6 対応
+  app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(frontendBuildPath, "index.html"));
   });
 }
