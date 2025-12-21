@@ -14,30 +14,6 @@ const Top = () => {
   const [isLoading, setIsLoading] = useState(!isMockMode);
   const [error, setError] = useState<string | null>(null);
 
-  const mockDiscussionData = [
-    {
-      id: 1,
-      title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      problemCount: 99,
-      solutionCount: 99,
-      likeCount: 99,
-    },
-    {
-      id: 2,
-      title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      problemCount: 99,
-      solutionCount: 99,
-      likeCount: 99,
-    },
-    {
-      id: 3,
-      title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      problemCount: 99,
-      solutionCount: 99,
-      likeCount: 99,
-    },
-  ];
-
   const mockThemeData = [
     {
       _id: "theme-1",
