@@ -40,28 +40,19 @@ const Top = () => {
 
   const mockThemeData = [
     {
-      id: "1",
+      _id: "theme-1",
       title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      description:
-        "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      keyQuestionCount: 99,
-      commentCount: 99,
+      slug: "demo-theme-1",
     },
     {
-      id: "2",
+      _id: "theme-2",
       title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      description:
-        "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      keyQuestionCount: 99,
-      commentCount: 99,
+      slug: "demo-theme-2",
     },
     {
-      id: "3",
+      _id: "theme-3",
       title: "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      description:
-        "どうすれば若者が安心してキャリアを築ける社会を実現できるか？",
-      keyQuestionCount: 99,
-      commentCount: 99,
+      slug: "demo-theme-3",
     },
   ];
 
@@ -163,17 +154,16 @@ const Top = () => {
 
   if (isMockMode || topPageData) {
     const templateProps = isMockMode
-  ? {
-      discussions: mockDiscussionData,
-      themes: mockThemeData,
-      questions: mockQuestions,
-      latestOpinions: [], // Mock mode doesn't have opinions yet
-    }
-  : {
-      themes: topPageData?.latestThemes || [],
-      latestQuestions: topPageData?.latestQuestions || [],
-      latestOpinions: topPageData?.latestOpinions || [],
-    };
+      ? {
+          themes: mockThemeData,
+          latestQuestions: mockQuestions,
+          latestOpinions: [],
+        }
+      : {
+          themes: topPageData?.latestThemes || [],
+          latestQuestions: topPageData?.latestQuestions || [],
+          latestOpinions: topPageData?.latestOpinions || [],
+        };
 
     return <TopPageTemplate {...templateProps} />;
   }
